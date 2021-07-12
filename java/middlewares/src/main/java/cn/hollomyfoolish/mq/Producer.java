@@ -1,5 +1,6 @@
 package cn.hollomyfoolish.mq;
 
+import cn.hollomyfoolish.utils.ServerUtils;
 import com.rabbitmq.client.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +14,9 @@ public class Producer {
     private static Logger logger = LoggerFactory.getLogger(Producer.class);
 
     public static void main(String[] args) {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost(MQConst.HOST);
-        factory.setPort(MQConst.PORT);
-        factory.setUsername(MQConst.USER);
-        factory.setPassword(MQConst.PASSWORD);
-        factory.setVirtualHost(MQConst.VIRTUAL_HOST);
-        String nameTag = System.getenv("COMPUTERNAME");
+        String nameTag = ServerUtils.getHostName();
         try(
-                Connection connection = factory.newConnection(CONNECTION_NAME + " from " + nameTag);
+                Connection connection = MQFactory.newConnection(CONNECTION_NAME + " from " + nameTag);
                 Channel channel = connection.createChannel()
         ){
             String broadcastEx = "b1 broadcast";

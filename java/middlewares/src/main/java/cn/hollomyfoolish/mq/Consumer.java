@@ -1,5 +1,6 @@
 package cn.hollomyfoolish.mq;
 
+import cn.hollomyfoolish.utils.ServerUtils;
 import com.google.gson.Gson;
 import com.rabbitmq.client.*;
 
@@ -8,17 +9,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeoutException;
 
 public class Consumer {
-    public static final String CONNECTION_NAME = "Consumer of Producer";
+    public static final String CONNECTION_NAME = "Connection of Consumer";
     private static final Object lock = new Object();
 
     public static void main(String[] args) {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
-        factory.setPort(5672);
-        factory.setUsername("guest");
-        factory.setPassword("guest");
         try(
-                Connection connection = factory.newConnection(CONNECTION_NAME);
+                Connection connection = MQFactory.newConnection(CONNECTION_NAME + " from " + ServerUtils.getHostName());
         ){
             for(Components component : Components.values()){
                 startListening(component, connection);
