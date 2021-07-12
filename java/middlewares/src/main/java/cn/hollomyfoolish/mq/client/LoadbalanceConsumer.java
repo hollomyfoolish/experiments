@@ -33,6 +33,13 @@ public class LoadbalanceConsumer {
                     }
                 }
             });
+            synchronized (this){
+                try {
+                    this.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         } catch (TimeoutException | IOException e) {
             e.printStackTrace();
         }
