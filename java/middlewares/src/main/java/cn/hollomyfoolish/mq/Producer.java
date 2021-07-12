@@ -19,7 +19,7 @@ public class Producer {
                 Connection connection = MQFactory.newConnection(CONNECTION_NAME + " from " + nameTag);
                 Channel channel = connection.createChannel()
         ){
-            String broadcastEx = "b1 broadcast";
+            String broadcastEx = MQConst.BROAD_EX_NAME;
             channel.exchangeDeclare(broadcastEx, BuiltinExchangeType.FANOUT);
             declareQueues(channel, broadcastEx);
             int messIdx = 1;
@@ -27,7 +27,7 @@ public class Producer {
                 try {
                     if(messIdx%2 == 0){
                         // broadcast
-                        channel.basicPublish(broadcastEx, "broadcast", MessageProperties.PERSISTENT_TEXT_PLAIN, new B1Message(messIdx, "from broadcast").toBytes());
+//                        channel.basicPublish(broadcastEx, "broadcast", MessageProperties.PERSISTENT_TEXT_PLAIN, new B1Message(messIdx, "from broadcast").toBytes());
                     }else{
                         // to B1AH queue only
                         channel.basicPublish("", Components.B1AH.name(), MessageProperties.PERSISTENT_TEXT_PLAIN, new B1Message(messIdx, "from broadcast").toBytes());
@@ -38,7 +38,8 @@ public class Producer {
                 }
                 messIdx++;
                 try {
-                    TimeUnit.SECONDS.sleep(10);
+//                    TimeUnit.SECONDS.sleep(10);
+                    TimeUnit.MILLISECONDS.sleep(100);
                 } catch (InterruptedException e) {
                     logger.warn("thread interrupted", e);
                 }

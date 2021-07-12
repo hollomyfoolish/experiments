@@ -25,4 +25,26 @@ public class MQFactory {
         factory.setVirtualHost(virtualHost);
         return factory.newConnection(name);
     }
+
+    public static ConnectionFactory defaultFactory(){
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost(MQConst.HOST);
+        factory.setPort(MQConst.PORT);
+        factory.setUsername(MQConst.USER);
+        factory.setPassword(MQConst.PASSWORD);
+        factory.setVirtualHost(MQConst.VIRTUAL_HOST);
+
+        return factory;
+    }
+
+    public static ConnectionFactory defaultSpringFactory(){
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost(MQConst.HOST);
+        factory.setPort(MQConst.PORT);
+        factory.setUsername(MQConst.USER);
+        factory.setPassword(MQConst.PASSWORD);
+        factory.setVirtualHost(MQConst.SPRING_VIRTUAL_HOST);
+
+        return factory;
+    }
 }

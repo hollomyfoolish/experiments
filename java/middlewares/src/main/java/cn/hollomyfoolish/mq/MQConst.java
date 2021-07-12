@@ -6,4 +6,6 @@ public interface MQConst {
     String USER = "admin";
     String PASSWORD = "admin";
     String VIRTUAL_HOST = "/";
+    String BROAD_EX_NAME = "b1 broadcast";
+    String SPRING_VIRTUAL_HOST = "spring";
 }
