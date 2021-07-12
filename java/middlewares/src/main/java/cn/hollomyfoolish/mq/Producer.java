@@ -14,12 +14,14 @@ public class Producer {
 
     public static void main(String[] args) {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
-        factory.setPort(5672);
-        factory.setUsername("guest");
-        factory.setPassword("guest");
+        factory.setHost(MQConst.HOST);
+        factory.setPort(MQConst.PORT);
+        factory.setUsername(MQConst.USER);
+        factory.setPassword(MQConst.PASSWORD);
+        factory.setVirtualHost(MQConst.VIRTUAL_HOST);
+        String nameTag = System.getenv("COMPUTERNAME");
         try(
-                Connection connection = factory.newConnection(CONNECTION_NAME);
+                Connection connection = factory.newConnection(CONNECTION_NAME + " from " + nameTag);
                 Channel channel = connection.createChannel()
         ){
             String broadcastEx = "b1 broadcast";
