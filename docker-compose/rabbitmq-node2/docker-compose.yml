@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./.docker-volumn/data:/var/lib/rabbitmq/mnesia
+      - ./.docker-volumn/log:/var/log/rabbitmq
+

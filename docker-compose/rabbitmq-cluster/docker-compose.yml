@@ -1,0 +1,36 @@
+version: '3.3'
+services:
+  rabbitmq1:
+    image: rabbitmq:3-management-alpine
+    restart: always
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=XEATWFTJNJSPMFPTUSOH
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./.docker-volumn/n1/data:/var/lib/rabbitmq/mnesia
+      - ./.docker-volumn/n1/log:/var/log/rabbitmq
+  rabbitmq2:
+    image: rabbitmq:3-management-alpine
+    restart: always
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=XEATWFTJNJSPMFPTUSOH
+    ports:
+      - 5673:5672
+      - 15673:15672
+    volumes:
+      - ./.docker-volumn/n2/data:/var/lib/rabbitmq/mnesia
+      - ./.docker-volumn/n2/log:/var/log/rabbitmq
+  rabbitmq3:
+    image: rabbitmq:3-management-alpine
+    restart: always
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=XEATWFTJNJSPMFPTUSOH
+    ports:
+      - 5674:5672
+      - 15674:15672
+    volumes:
+      - ./.docker-volumn/n3/data:/var/lib/rabbitmq/mnesia
+      - ./.docker-volumn/n3/log:/var/log/rabbitmq
+
