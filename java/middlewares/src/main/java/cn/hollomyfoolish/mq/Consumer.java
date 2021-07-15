@@ -11,10 +11,15 @@ import java.util.concurrent.TimeoutException;
 public class Consumer {
     public static final String CONNECTION_NAME = "Connection of Consumer";
     private static final Object lock = new Object();
+    private String name;
 
-    public static void main(String[] args) {
+    public Consumer(String name) {
+        this.name = name;
+    }
+
+    public void run(){
         try(
-                Connection connection = MQFactory.newConnection(CONNECTION_NAME + " from " + ServerUtils.getHostName());
+                Connection connection = MQFactory.newConnection(this.name + " from " + ServerUtils.getHostName());
         ){
             for(Components component : Components.values()){
                 startListening(component, connection);
@@ -99,4 +104,7 @@ public class Consumer {
         }
     }
 
+    public static void main(String[] args) {
+        new Consumer("Consumer 1").run();
+    }
 }
