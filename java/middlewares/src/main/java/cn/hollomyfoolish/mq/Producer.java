@@ -18,11 +18,8 @@ public class Producer implements Runnable{
         this.name = name == null?"default producer" : name;
     }
 
-    @Override
-    public void run(){
-        String nameTag = ServerUtils.getHostName();
+    public void runWithConnection(Connection connection){
         try(
-                Connection connection = MQFactory.newConnection(this.name + " from " + nameTag);
                 Channel channel = connection.createChannel()
         ){
             String broadcastEx = MQConst.BROAD_EX_NAME;
@@ -56,6 +53,18 @@ public class Producer implements Runnable{
 //                    logger.warn("thread interrupted", e);
 //                }
             }
+        } catch (IOException | TimeoutException e) {
+            logger.error("connection with MQ down", e);
+        }
+    }
+
+    @Override
+    public void run(){
+        String nameTag = ServerUtils.getHostName();
+        try(
+                Connection connection = MQFactory.newConnection(this.name + " from " + nameTag);
+        ){
+            runWithConnection(connection);
         } catch (IOException | TimeoutException e) {
             logger.error("connection with MQ down", e);
         }
