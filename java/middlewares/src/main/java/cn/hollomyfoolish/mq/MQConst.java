@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface MQConst {
-    String HOST = "c02yg4s5jg5j";
+//    String HOST = "c02yg4s5jg5j";
+    String HOST = "localhost";
     int PORT = 5672;
     String USER = "admin";
     String PASSWORD = "admin";
@@ -14,12 +15,11 @@ public interface MQConst {
     String BROAD_EX_NAME = "b1 broadcast";
     String SPRING_VIRTUAL_HOST = "spring";
 
-    List<Address> cluster = new ArrayList<Address>(){
+    List<Address> clusters = new ArrayList<Address>(){
         {
             this.add(new Address(HOST, 5672));
             this.add(new Address(HOST, 5673));
             this.add(new Address(HOST, 5674));
         }
     };
-
 }

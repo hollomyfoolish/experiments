@@ -22,12 +22,8 @@ public class MQFactory {
     }
 
     public static Connection newClusterConnection(String name) throws IOException, TimeoutException {
-        return newConnection(MQConst.VIRTUAL_HOST, name);
-    }
-
-    public static Connection newConnection(String virtualHost, String name) throws IOException, TimeoutException {
-        int idx = new Random().nextInt(MQConst.cluster.size());
-        Address address = MQConst.cluster.get(idx);
+        int idx = new Random().nextInt(MQConst.clusters.size());
+        Address address = MQConst.clusters.get(idx);
         logger.info("thread {} choose node {}:{}", Thread.currentThread().getName(), address.getHost(), address.getPort());
 
         ConnectionFactory factory = new ConnectionFactory();
@@ -35,8 +31,16 @@ public class MQFactory {
         factory.setPort(address.getPort());
         factory.setUsername(MQConst.USER);
         factory.setPassword(MQConst.PASSWORD);
-        factory.setVirtualHost(virtualHost);
+        factory.setVirtualHost(MQConst.VIRTUAL_HOST);
         return factory.newConnection(name);
+    }
+
+    public static Connection newConnection(String virtualHost, String name) throws IOException, TimeoutException {
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setUsername(MQConst.USER);
+        factory.setPassword(MQConst.PASSWORD);
+        factory.setVirtualHost(virtualHost);
+        return factory.newConnection(MQConst.clusters, name);
     }
 
     public static ConnectionFactory defaultFactory(){

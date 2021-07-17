@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class Producer implements Runnable{
@@ -46,12 +45,6 @@ public class Producer implements Runnable{
                 if("q".equals(command)){
                     break;
                 }
-//                try {
-//                    TimeUnit.SECONDS.sleep(5);
-////                    TimeUnit.MILLISECONDS.sleep(100);
-//                } catch (InterruptedException e) {
-//                    logger.warn("thread interrupted", e);
-//                }
             }
         } catch (IOException | TimeoutException e) {
             logger.error("connection with MQ down", e);
